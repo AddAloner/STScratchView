@@ -99,6 +99,28 @@
     
 }
 
+- (CGFloat)scratchOpened
+{
+    if (_contextMask == NULL) return 0;
+    
+    size_t imageWidth = CGBitmapContextGetWidth(_contextMask);
+    size_t imageHeight = CGBitmapContextGetHeight(_contextMask);
+    
+    unsigned char *rawData = CGBitmapContextGetData(_contextMask);
+    
+    int bytesOnPixel = 4;
+    int dataSize = imageWidth * imageHeight * bytesOnPixel;
+    int alphaIndex = 3;
+    CGFloat filedSum;
+    
+    while (alphaIndex < dataSize) {
+        filedSum += (rawData[alphaIndex] * 1.0) / 255.f;
+        alphaIndex += bytesOnPixel;
+    }
+    
+    return filedSum / (imageWidth * imageHeight);
+}
+
 #pragma mark -
 #pragma mark Touch event
 
