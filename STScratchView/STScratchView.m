@@ -103,8 +103,10 @@
 {
     if (_contextMask == NULL) return 0;
     
-    size_t imageWidth = CGBitmapContextGetWidth(_contextMask);
-    size_t imageHeight = CGBitmapContextGetHeight(_contextMask);
+    float scale = [UIScreen mainScreen].scale;
+    
+    size_t imageWidth = CGBitmapContextGetWidth(_contextMask) / scale;
+    size_t imageHeight = CGBitmapContextGetHeight(_contextMask) / scale;
     
     unsigned char *rawData = CGBitmapContextGetData(_contextMask);
     
@@ -130,6 +132,10 @@
     
     UITouch *touch = [[event touchesForView:self] anyObject];
     _currentTouchLocation = [touch locationInView:self];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(scratchViewStartMove:)]) {
+        [self.delegate scratchViewStartMove:self];
+    }
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -158,6 +164,10 @@
     {
         _previousTouchLocation = [touch previousLocationInView:self];
         [self scratchTheViewFrom:_previousTouchLocation to:_currentTouchLocation];
+    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(scratchViewEndMove:)]) {
+        [self.delegate scratchViewEndMove:self];
     }
 }
 
