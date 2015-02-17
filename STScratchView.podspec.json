@@ -1,6 +1,6 @@
 {
   "name": "STScratchView",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "summary": "A UIView which allow a manual and automatic scratching behavior.",
   "homepage": "https://github.com/AddAloner/STScratchView",
   "license": {
@@ -12,7 +12,7 @@
   },
   "source": {
     "git": "https://github.com/AddAloner/STScratchView.git",
-    "commit": "3559fb7bef41"
+    "tag": "1.2.0"
   },
   "platforms": {
     "ios": "5.0"

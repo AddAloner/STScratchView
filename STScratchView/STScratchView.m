@@ -88,6 +88,14 @@
     CGColorSpaceRelease(colorspace);
 }
 
+- (BOOL)allowScratch
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(scratchViewAllowScratch:)]) {
+        return [self.delegate scratchViewAllowScratch:self];
+    }
+    return YES;
+}
+
 - (void)scratchTheViewFrom:(CGPoint)startPoint to:(CGPoint)endPoint
 {
     float scale = [UIScreen mainScreen].scale;
@@ -128,6 +136,10 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (![self allowScratch]) {
+        return;
+    }
+    
     [super touchesBegan:touches withEvent:event];
     
     UITouch *touch = [[event touchesForView:self] anyObject];
@@ -140,6 +152,10 @@
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (![self allowScratch]) {
+        return;
+    }
+    
     [super touchesMoved:touches withEvent:event];
     
     UITouch *touch = [[event touchesForView:self] anyObject];
@@ -152,10 +168,18 @@
     _previousTouchLocation = [touch previousLocationInView:self];
    
     [self scratchTheViewFrom:_previousTouchLocation to:_currentTouchLocation];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(scratchViewDidMove:)]) {
+        [self.delegate scratchViewDidMove:self];
+    }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (![self allowScratch]) {
+        return;
+    }
+    
     [super touchesEnded:touches withEvent:event];
     
     UITouch *touch = [[event touchesForView:self] anyObject];

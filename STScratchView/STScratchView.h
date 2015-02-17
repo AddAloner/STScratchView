@@ -11,8 +11,10 @@
 @protocol STScratchViewDelegate <NSObject>
 
 @optional
+- (BOOL)scratchViewAllowScratch:(STScratchView *)scratchView;
 - (void)scratchViewStartMove:(STScratchView *)scratchView;
 - (void)scratchViewEndMove:(STScratchView *)scratchView;
+- (void)scratchViewDidMove:(STScratchView *)scratchView;
 
 @end
 
