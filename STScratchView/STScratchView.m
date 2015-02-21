@@ -121,7 +121,7 @@
     int bytesOnPixel = 4;
     int dataSize = imageWidth * imageHeight * bytesOnPixel;
     int alphaIndex = 3;
-    CGFloat filedSum;
+    CGFloat filedSum = 0;
     
     while (alphaIndex < dataSize) {
         filedSum += (rawData[alphaIndex] * 1.0) / 255.f;
