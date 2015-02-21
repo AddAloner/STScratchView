@@ -111,21 +111,16 @@
 {
     if (_contextMask == NULL) return 0;
     
-    float scale = [UIScreen mainScreen].scale;
-    
-    size_t imageWidth = CGBitmapContextGetWidth(_contextMask) / scale;
-    size_t imageHeight = CGBitmapContextGetHeight(_contextMask) / scale;
+    size_t imageWidth = CGBitmapContextGetWidth(_contextMask);
+    size_t imageHeight = CGBitmapContextGetHeight(_contextMask);
     
     unsigned char *rawData = CGBitmapContextGetData(_contextMask);
     
-    int bytesOnPixel = 4;
-    int dataSize = imageWidth * imageHeight * bytesOnPixel;
-    int alphaIndex = 3;
+    int dataSize = imageWidth * imageHeight;
     CGFloat filedSum = 0;
     
-    while (alphaIndex < dataSize) {
-        filedSum += (rawData[alphaIndex] * 1.0) / 255.f;
-        alphaIndex += bytesOnPixel;
+    for (int i = 0; i < dataSize; i++) {
+        filedSum += (rawData[i] * 1.0) / 255.f;
     }
     
     return filedSum / (imageWidth * imageHeight);
