@@ -77,7 +77,7 @@
 
     
     CGContextSetStrokeColorWithColor(_contextMask, [UIColor whiteColor].CGColor);
-    CGContextSetLineWidth(_contextMask, _sizeBrush);
+    CGContextSetLineWidth(_contextMask, _sizeBrush * scale);
     CGContextSetLineCap(_contextMask, kCGLineCapRound);
     
     CGImageRef mask = CGImageMaskCreate(imageWidth, imageHeight, 8, 8, imageWidth, dataProvider, nil, NO);
